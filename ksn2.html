@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Herd Welfare Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(212, 21, 24);
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: rgb(13, 2, 31);
+            color: rgb(37, 4, 224);
+            padding: 5px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar a {
+            color: #fa1010;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            cursor: pointer;
+            color: #fff;
+            margin-right: 10px;
+            font-size: 18px;
+            padding: 5px 10px;
+            background-color: #333;
+            border-radius: 5px;
+        }
+
+        .language-switcher:hover {
+            background-color: #555;
+        }
+
+        /* Main Header */
+        header {
+            display: flex;
+            align-items: center;
+            background-color: hwb(324 5% 29%);
+            padding: 10px 20px;
+            border-bottom: 3px solid #4e2a84;
+        }
+
+        .logo img {
+            width: 70px;
+        }
+
+        .title h1 {
+            margin: 0;
+            padding-left: 15px;
+            color: #4e2a84;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #4e2a84;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #09022a;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+        }
+
+        /* Services Section */
+        .services {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .service-card button {
+            background-color: #00BFFF;
+            color: #502d7b;
+            padding: 15px 30px;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        .service-card button:hover {
+            background-color: #57c287;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #00008B;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #4e2a84;
+        }
+
+        /* Sign-in Modal */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+        }
+
+        .close {
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1;}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Sign-In Form Styles */
+        .signin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .signin-form input {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .signin-form button {
+            padding: 10px;
+            background-color: #4e2a84;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .signin-form button:hover {
+            background-color: #333;
+        }
+
+        /* OTP Section */
+        .otp-section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar with Language Switcher -->
+    <div class="top-bar">
+        <div class="left">
+            <a href="#" id="languageSwitch" class="language-switcher">English</a>
+            <span id="websiteName">Official Website of AHWMS</span>
+        </div>
+        <div class="right">
+            <a href="#" onclick="openModal()">Sign In</a>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Emblem_of_Karnataka.png" alt="Karnataka Emblem">
+        </div>
+        <div class="title">
+            <h1 id="headerTitle">Animal Herd Welfare Management</h1>
+            <h2 id="subTitle">Government of Karnataka</h2>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#" id="nav1">Institution</a></li>
+            <li><a href="#" id="nav2">Medicine</a></li>
+            <li><a href="#" id="nav3">Department Websites</a></li>
+            <li><a href="#" id="nav4">Media</a></li>
+            <li><a href="#" id="nav5">Veterinary</a></li>
+            <li><a href="#" id="nav6">Helpline 24x7</a></li>
+        </ul>
+    </nav>
+
+    <!-- Services and Schemes Section -->
+    <section>
+        <h2 id="servicesHeader">Services and Schemes</h2>
+        <div class="services">
+            <div class="dropdown">
+                <button class="service-card">Services and Schemes</button>
+                <div class="dropdown-content">
+                    <a href="https://ahidf.udyamimitra.in/" target="_blank">AHIDF Scheme</a>
+                    <a href="http://pashuaushadha.kar.nic.in/" target="_blank">Pashu Aushadha Scheme</a>
+                    <a href="https://www.nlm.udyamimitra.in/" target="_blank">NLPM Scheme</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Karnataka Animal Husbandry Department. All rights reserved.</p>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Sign In</h3>
+                <span class="close" onclick="closeModal()">×</span>
+            </div>
+            <form class="signin-form" id="signinForm">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age" required>
+
+                <label for="district">District</label>
+                <input type="text" id="district" name="district" placeholder="Enter your district" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+                <div class="error" id="errorMessage"></div>
+                <button type="button" onclick="generateOTP()">Generate OTP</button>
+
+                <div class="otp-section" id="otpSection">
+                    <label for="otp">Enter OTP</label>
+                    <input type="text" id="otp" name="otp" placeholder="Enter the OTP sent to your phone" required>
+                    <button type="button" onclick="verifyOTP()">Verify OTP</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let isKannada = false;
+
+        function switchLanguage() {
+            const textElements = document.querySelectorAll("[id^='header'], [id^='sub'], [id^='nav'], [id^='intro'], [id^='servicesHeader']");
+            if (!isKannada) {
+                document.getElementById("languageSwitch").innerText = "ಕನ್ನಡ";
+                document.getElementById("headerTitle").innerText = "ಪಶು ಹೆರ್ಡ್ ಕಲ್ಯಾಣ ವ್ಯವಸ್ಥೆ";
+                document.getElementById("subTitle").innerText = "ಕರ್ನಾಟಕ ಸರ್ಕಾರ";
+                document.getElementById("nav1").innerText = "ಸಂಸ್ಥೆ";
+                document.getElementById("nav2").innerText = "ಔಷಧ";
+                document.getElementById("nav3").innerText = "ವಿಭಾಗ ವೆಬ್‌ಸೈಟ್";
+                document.getElementById("nav4").innerText = "ಮಾಧ್ಯಮ";
+                document.getElementById("nav5").innerText = "ಪಶು ವೈದ್ಯಕೀಯ";
+                document.getElementById("nav6").innerText = "ಹೆಲ್ಪ್‌ಲೈನ್ 24x7";
+                document.getElementById("servicesHeader").innerText = "ಸೇವೆ ಮತ್ತು ಯೋಜನೆಗಳು";
+            } else {
+                document.getElementById("languageSwitch").innerText = "English";
+                document.getElementById("headerTitle").innerText = "Animal Herd Welfare Management";
+                document.getElementById("subTitle").innerText = "Government of Karnataka";
+                document.getElementById("nav1").innerText = "Institution";
+                document.getElementById("nav2").innerText = "Medicine";
+                document.getElementById("nav3").innerText = "Department Websites";
+                document.getElementById("nav4").innerText = "Media";
+                document.getElementById("nav5").innerText = "Veterinary";
+                document.getElementById("nav6").innerText = "Helpline 24x7";
+                document.getElementById("servicesHeader").innerText = "Services and Schemes";
+            }
+            isKannada = !isKannada;
+        }
+
+        document.getElementById("languageSwitch").addEventListener("click", switchLanguage);
+
+        function openModal() {
+            document.getElementById("signinModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("signinModal").style.display = "none";
+        }
+
+        function generateOTP() {
+            const phone = document.getElementById("phone").value;
+            if (phone) {
+                const otp = Math.floor(100000 + Math.random() * 900000);
+                alert("OTP Sent: " + otp);
+                document.getElementById("otpSection").style.display = "block";
+            } else {
+                alert("Please enter a valid phone number.");
+            }
+        }
+
+        function verifyOTP() {
+            const otp = document.getElementById("otp").value;
+            if (otp) {
+                alert("OTP Verified!");
+                closeModal();
+            } else {
+                alert("Please enter the OTP.");
+            }
+        }
+    </script>
+</body>
+</html>
